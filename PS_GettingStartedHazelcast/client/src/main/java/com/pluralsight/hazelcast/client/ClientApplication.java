@@ -1,6 +1,7 @@
 package com.pluralsight.hazelcast.client;
 
 import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,17 +12,16 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by Grant Little grant@grantlittle.me
  */
-@SpringBootApplication
 @Configuration
+@SpringBootApplication
 public class ClientApplication {
 
     public static void main(String... args) {
         SpringApplication.run(ClientApplication.class, args);
     }
 
-    @Bean(destroyMethod = "shutdown")
-    public HazelcastInstance clientInstance() throws Exception {
-        return HazelcastClient.newHazelcastClient();
+    @Bean(name = "ClientInstance", destroyMethod = "shutdown")
+    public HazelcastInstance clientInstance(ClientConfig clientConfig) throws Exception {
+        return HazelcastClient.newHazelcastClient(clientConfig);
     }
-
 }
