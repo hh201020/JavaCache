@@ -23,12 +23,13 @@ import java.util.Map;
 @Service
 public class CustomerService implements MapNames {
 
-	@Autowired
-	@Qualifier("ClientInstance")
     private HazelcastInstance hazelcastInstance;
     private IMap<Long, Customer> customersMap;
 
-    public CustomerService() {
+    @Autowired
+    public CustomerService(@Qualifier("ClientInstance")
+                           HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
     }
 
     @PostConstruct
